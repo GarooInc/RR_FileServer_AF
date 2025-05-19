@@ -1,20 +1,20 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const app = express();
 
-//middlewares
+// Middlewares
 app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
+app.use(cors({ origin: '*', credentials: true }));
 
+// Servir archivos estáticos desde /uploads
+app.use('/files', express.static(path.join(__dirname, 'files')));
 
-// Enable CORS
-app.use(cors({
-    origin: '*',
-    credentials: true
-}));
-
-//routes
+// Rutas
 app.use(require('./routes/index'));
 
-app.listen(3070);
-console.log('Server on port: ', 3070);
+// Iniciar servidor
+app.listen(3070, () => {
+  console.log('Server on port:', 3070);
+});
