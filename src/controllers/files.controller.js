@@ -3,8 +3,9 @@ const multer = require('multer');
 const fs = require('fs');
 require('dotenv').config();
 
-const UPLOAD_PATH = process.env.UPLOAD_PATH || 'src/uploads';
+const UPLOAD_PATH = process.env.UPLOAD_PATH;
 const BASE_URL = process.env.BASE_URL;
+const DIRECTORY = process.env.DIRECTORY;
 
 // Middleware dinámico para almacenamiento según tipo y uuid
 const storage = multer.diskStorage({
@@ -39,7 +40,8 @@ exports.uploadFile = (req, res) => {
 
   const ext = path.extname(file.originalname);
   const filePath = `${UPLOAD_PATH}/${tipo}/${uuid}${ext}`;
-  const fileUrl = `${BASE_URL}/${filePath}`;
+  const fileLocationRelative = `${DIRECTORY}/${tipo}/${uuid}${ext}`;
+  const fileUrl = `${BASE_URL}/${fileLocationRelative}`;
 
   return res.status(200).json({
     message: 'Archivo subido correctamente',
