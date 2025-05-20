@@ -15,6 +15,7 @@ app.use('/files', express.static(path.join(__dirname, 'files')));
 app.use(require('./routes/index'));
 
 // Iniciar servidor
-app.listen(3070, () => {
-  console.log('Server on port:', 3070);
+const PORT = process.env.PORT;
+app.listen(PORT, () => {
+  console.log('Server on port:', PORT);
 });
